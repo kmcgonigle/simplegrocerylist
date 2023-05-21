@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex: 1;
+  font-family: 'Quicksand';
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  width: 100%;
+}
+
+.item {
+  background-color: #ccc;
+  padding: 20px;
+  margin: 8px 16px;
+}
+
+.title {
+  font-size: 32;
+}
