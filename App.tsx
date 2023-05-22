@@ -1,35 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
-import { SafeAreaView, View, FlatList, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { setCustomText } from 'react-native-global-props';
-//@ts-ignore
-import styles from './App.scss';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
-
-type ItemProps = { title: string };
-
-const Item = ({ title }: ItemProps) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+import List from './components/List';
 
 const App = () => {
+  const [fontLoaded] = useFonts({
+    Quicksand: require('./assets/fonts/Quicksand-Regular.ttf'),
+  });
+
+  if (!fontLoaded) {
+    return <AppLoading />;
+  }
+
   const customTextProps = {
     style: {
       fontFamily: 'Quicksand',
@@ -37,23 +22,10 @@ const App = () => {
   };
   setCustomText(customTextProps);
 
-  const [fontLoaded] = useFonts({
-    Quicksand: require('./assets/fonts/Quicksand-Regular.ttf'),
-  });
-
-  if (!fontLoaded) {
-    return AppLoading;
-  }
-
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={({ item }) => <Item title={item.title} />}
-        keyExtractor={(item) => item.id}
-      />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    <NavigationContainer>
+      <List />
+    </NavigationContainer>
   );
 };
 
