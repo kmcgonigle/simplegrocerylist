@@ -20,15 +20,15 @@ const useProxy = Platform.select({ web: false, default: true });
 type HeaderProps = { title: string };
 type ItemProps = { title: string };
 
-const Header = ({ title }: HeaderProps) => (
-  <View style={styles.header}>
-    <Text style={styles.title}>{title}</Text>
+const Aisle = ({ title }: HeaderProps) => (
+  <View style={styles.aisle}>
+    <Text style={styles.aisle__text}>{title}</Text>
   </View>
 );
 
 const Item = ({ title }: ItemProps) => (
   <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.item__text}>{title}</Text>
   </View>
 );
 
@@ -61,7 +61,7 @@ const List = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Simple Grocery List</Text>
+      <Text style={styles.header__main}>Simple Grocery List</Text>
 
       {!auth && (
         <Button
@@ -78,8 +78,10 @@ const List = () => {
           sections={data.list}
           renderItem={({ item }) => <Item title={item} />}
           keyExtractor={(item, index) => `${item}-${index}`}
-          renderSectionHeader={({ section: { title } }) => <Header title={title} key={title} />}
+          renderSectionHeader={({ section: { title } }) => <Aisle title={title} key={title} />}
           stickyHeaderIndices={[0]}
+          stickySectionHeadersEnabled
+          style={styles.list}
         />
       )}
     </View>

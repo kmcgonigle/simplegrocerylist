@@ -29,6 +29,13 @@
       "config": "metro.config.js",
       "sourceExts": ["js", "jsx", "ts", "tsx", "scss", "sass"]
     },
-    "scheme": "simplegrocerylist"
+    "scheme": "simplegrocerylist",
+    "postcss": {
+      "parser": "sugarss",
+      "map": false,
+      "plugins": {
+        "postcss-plugin": {}
+      }
+    }
   }
 }
