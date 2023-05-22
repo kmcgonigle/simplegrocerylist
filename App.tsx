@@ -23,7 +23,11 @@ const App = () => {
   setCustomText(customTextProps);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      documentTitle={{
+        formatter: (options, route) => `${options?.title ?? route?.name} - Simple Grocery List`,
+      }}
+    >
       <List />
     </NavigationContainer>
   );
