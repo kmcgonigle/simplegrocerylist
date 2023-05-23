@@ -1,7 +1,7 @@
 :root {
-  --font-size-large: 38px;
-  --font-size-medium: 24px;
-  --font-size-small: 16px;
+  --font-size-large: 42px;
+  --font-size-medium: 36px;
+  --font-size-small: 24px;
 
   --spacing-medium: 20px;
   --spacing-small: 10px;
@@ -27,6 +27,13 @@
   padding: var(--spacing-small) 0;
 }
 
+.buttonsWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-medium);
+  margin-top: var(--spacing-medium);
+}
+
 .list {
   max-width: 580px;
   width: 100%;
@@ -37,22 +44,43 @@
   margin: var(--spacing-medium) 0 0;
   padding: var(--spacing-small) 0;
   text-transform: capitalize;
-}
 
-.aisle__text {
-  color: var(--grey-light);
-  font-size: var(--font-size-medium);
-  text-align: center;
-  font-weight: 600;
+  &__text {
+    color: var(--grey-light);
+    font-size: var(--font-size-medium);
+    text-align: center;
+  }
 }
 
 .item {
   background-color: var(--grey-light);
-  padding: var(--spacing-medium);
+  padding: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) var(--spacing-medium);
   margin: var(--spacing-small) 0;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+  opacity: 1;
+  border-radius: 8px;
+
+  &__text {
+    font-size: var(--font-size-small);
+  }
 }
 
-.item__text {
-  font-size: var(--font-size-small);
+.removeItem {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  &__icon {
+    width: 50%;
+    height: 50%;
+    display: block;
+  }
 }

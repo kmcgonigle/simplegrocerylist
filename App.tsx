@@ -25,7 +25,12 @@ const App = () => {
   return (
     <NavigationContainer
       documentTitle={{
-        formatter: (options, route) => `${options?.title ?? route?.name} - Simple Grocery List`,
+        formatter: (options, route) => {
+          if (options?.title && route?.name) {
+            return `${options?.title ?? route?.name} - Simple Grocery List`;
+          }
+          return 'Simple Grocery List';
+        },
       }}
     >
       <List />
