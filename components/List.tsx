@@ -50,6 +50,23 @@ const List = () => {
     }
   }, [response]);
 
+  const handleAddAisle = () => {
+    // TODO:
+    // Type in aisle name
+    // 'Add', 'Add Another' or 'Cancel'
+  };
+
+  const handleAddItem = () => {
+    // TODO:
+    // Type in item name
+    // Select from pre-defined aisles list
+    // 'Add', 'Add Another' or 'Cancel'
+    // If exact item already exists in aisle, alert user
+    // Future TODO (consider data structure implications)
+    // Give an item a quantity (and measurement: lbs, oz, etc.)
+    // Give an item notes
+  };
+
   const handleRemoveAisle = (aisleIndex: number) => {
     const tempListData = [...groceryList];
     tempListData.splice(aisleIndex, 1);
@@ -109,9 +126,8 @@ const List = () => {
       {auth && <Button onPress={handleSync} title="Sync" />}
 
       <View style={styles.buttonsWrapper}>
-        {/* TODO */}
-        <Button title="Add Item" />
-        <Button title="Add Aisle" />
+        <Button title="Add Item" onPress={() => handleAddItem()} />
+        <Button title="Add Aisle" onPress={() => handleAddAisle()} />
       </View>
 
       {groceryList.length > 0 && (
@@ -127,7 +143,7 @@ const List = () => {
                 style={styles.removeItem}
                 onPress={() => handleRemoveItem(section.title, item, index)}
               >
-                <SvgCircleXMark fill="#cd1919 " />
+                <SvgCircleXMark fill="#cd1919" />
               </Pressable>
             </View>
           )}
