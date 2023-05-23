@@ -24,11 +24,12 @@ Development of this app has just started; functional features are coming soon.
 - Register redirect uri scheme with Android
 - Configure store aisles
 - Add grocery item to an aisle
-- Allow grocery item to be deleted from list
+- 'Add another' when adding grocery item
 - Allow grocery item to be checked off list (moved to 'Checkout')
 - Allow user to clear list
-- Allow user to reorder items
-- Allow user to reorder aisles
+- Handle duplicate item added (alert user and/or increase quanity?)
+- Allow user to re-order items
+- Allow user to re-order aisles
 - Welcome modal
 - Add multiple stores, each with their own aisle configuration
 - Allow user to mark certain items as 'Favorites'

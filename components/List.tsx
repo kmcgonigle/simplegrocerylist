@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { SectionList, Text, View, Button, Platform } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { SectionList, Text, View, Button, Platform, Pressable } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import SvgCircleXMark from '../assets/icons/circle-xmark';
 //@ts-ignore
 import styles from '../App.scss';
-import { sampleData as data } from '../data/sampleJSON';
+import { sampleData as data } from '../data/sampleJSON'; // TODO switch out for storage/Dropbox data
 
 // On web, ensures that authentication is completed properly
 WebBrowser.maybeCompleteAuthSession();
@@ -17,23 +18,17 @@ const discovery = {
 
 const useProxy = Platform.select({ web: false, default: true });
 
-type HeaderProps = { title: string };
-type ItemProps = { title: string };
-
-const Aisle = ({ title }: HeaderProps) => (
+type AisleProps = { title: string };
+const Aisle = ({ title }: AisleProps) => (
   <View style={styles.aisle}>
     <Text style={styles.aisle__text}>{title}</Text>
   </View>
 );
 
-const Item = ({ title }: ItemProps) => (
-  <View style={styles.item}>
-    <Text style={styles.item__text}>{title}</Text>
-  </View>
-);
-
 const List = () => {
   const [auth, setAuth] = useState(false);
+  const [groceryList, setGroceryList] = useState(data?.list || []);
+  const itemRefs: { [index: string]: any } = useRef([]);
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -55,6 +50,46 @@ const List = () => {
     }
   }, [response]);
 
+  const handleRemoveAisle = (aisleIndex: number) => {
+    const tempListData = [...groceryList];
+    tempListData.splice(aisleIndex, 1);
+
+    return setGroceryList(tempListData);
+  };
+
+  const handleRemoveItem = (sectionTitle: string, item: string, itemIndex: number) => {
+    // Find which aisle the item is being removed from
+    const aisleIndex = groceryList.findIndex((aisleName) => aisleName.title === sectionTitle);
+    if (aisleIndex === -1) {
+      console.error('Error: cannot find aisle containing item to be removed.');
+      return false;
+    }
+
+    // Animate removed element fade out
+    let fadeOutItem = setInterval(
+      () => (itemRefs.current[`${sectionTitle}-${item}`].style.opacity -= 0.1),
+      25
+    );
+
+    setTimeout(() => {
+      clearInterval(fadeOutItem);
+
+      // Update State data
+      const tempListData = [...groceryList];
+      const tempAisleData = [...groceryList[aisleIndex].data];
+      tempAisleData.splice(itemIndex, 1); // Remove clicked item from aisle
+      tempListData[aisleIndex].data = tempAisleData; // Replace aisle data
+
+      // If item is the last in an aisle, remove the aisle
+      if (tempAisleData.length === 0) {
+        return handleRemoveAisle(aisleIndex);
+      }
+
+      // Otherwise, just update the groceryList dataset
+      return setGroceryList(tempListData);
+    }, 300);
+  };
+
   const handleSync = () => {
     return true;
   };
@@ -73,10 +108,29 @@ const List = () => {
 
       {auth && <Button onPress={handleSync} title="Sync" />}
 
-      {data?.list?.length > 0 && (
+      <View style={styles.buttonsWrapper}>
+        {/* TODO */}
+        <Button title="Add Item" />
+        <Button title="Add Aisle" />
+      </View>
+
+      {groceryList.length > 0 && (
         <SectionList
-          sections={data.list}
-          renderItem={({ item }) => <Item title={item} />}
+          sections={groceryList}
+          renderItem={({ item, section, index }) => (
+            <View
+              style={styles.item}
+              ref={(el) => (itemRefs.current[`${section.title}-${item}`] = el)}
+            >
+              <Text style={styles.item__text}>{item}</Text>
+              <Pressable
+                style={styles.removeItem}
+                onPress={() => handleRemoveItem(section.title, item, index)}
+              >
+                <SvgCircleXMark fill="#cd1919 " />
+              </Pressable>
+            </View>
+          )}
           keyExtractor={(item, index) => `${item}-${index}`}
           renderSectionHeader={({ section: { title } }) => <Aisle title={title} key={title} />}
           stickyHeaderIndices={[0]}
