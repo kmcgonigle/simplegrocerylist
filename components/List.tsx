@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { SectionList, Text, View, Button, Platform, Pressable } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import SvgCircleXMark from '../assets/icons/circle-xmark';
+import SvgCircleXMark from '../assets/icons/SvgCircleXMark';
 //@ts-ignore
 import styles from '../App.scss';
 import { sampleData as data } from '../data/sampleJSON'; // TODO switch out for storage/Dropbox data
@@ -65,29 +65,30 @@ const List = () => {
       return false;
     }
 
+    // TODO set up Expo animation; animation works on web build but not Android:
     // Animate removed element fade out
-    let fadeOutItem = setInterval(
-      () => (itemRefs.current[`${sectionTitle}-${item}`].style.opacity -= 0.1),
-      25
-    );
+    // let fadeOutItem = setInterval(
+    //   () => (itemRefs.current[`${sectionTitle}-${item}`].style.opacity -= 0.1),
+    //   25
+    // );
 
-    setTimeout(() => {
-      clearInterval(fadeOutItem);
+    // setTimeout(() => {
+    // clearInterval(fadeOutItem);
 
-      // Update State data
-      const tempListData = [...groceryList];
-      const tempAisleData = [...groceryList[aisleIndex].data];
-      tempAisleData.splice(itemIndex, 1); // Remove clicked item from aisle
-      tempListData[aisleIndex].data = tempAisleData; // Replace aisle data
+    // Update State data
+    const tempListData = [...groceryList];
+    const tempAisleData = [...groceryList[aisleIndex].data];
+    tempAisleData.splice(itemIndex, 1); // Remove clicked item from aisle
+    tempListData[aisleIndex].data = tempAisleData; // Replace aisle data
 
-      // If item is the last in an aisle, remove the aisle
-      if (tempAisleData.length === 0) {
-        return handleRemoveAisle(aisleIndex);
-      }
+    // If item is the last in an aisle, remove the aisle
+    if (tempAisleData.length === 0) {
+      return handleRemoveAisle(aisleIndex);
+    }
 
-      // Otherwise, just update the groceryList dataset
-      return setGroceryList(tempListData);
-    }, 300);
+    // Otherwise, just update the groceryList dataset
+    return setGroceryList(tempListData);
+    // }, 300);
   };
 
   const handleSync = () => {
@@ -127,7 +128,7 @@ const List = () => {
                 style={styles.removeItem}
                 onPress={() => handleRemoveItem(section.title, item, index)}
               >
-                <SvgCircleXMark fill="#cd1919 " />
+                <SvgCircleXMark fill="#cd1919" width={20} height={20} />
               </Pressable>
             </View>
           )}

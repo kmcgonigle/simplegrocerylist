@@ -1,8 +1,9 @@
 :root {
-  --font-size-large: 42px;
-  --font-size-medium: 36px;
-  --font-size-small: 24px;
+  --font-size-large: 32px;
+  --font-size-medium: 28px;
+  --font-size-small: 18px;
 
+  --spacing-large: 30px;
   --spacing-medium: 20px;
   --spacing-small: 10px;
 
@@ -17,14 +18,14 @@
   justify-content: center;
   align-items: center;
   background-color: var(--grey-dark);
-  padding: var(--spacing-medium) 0 0;
+  padding: var(--spacing-medium) var(--spacing-medium) 0;
   width: 100%;
 }
 
 .header__main {
   color: var(--grey-light);
   font-size: var(--font-size-large);
-  padding: var(--spacing-small) 0;
+  padding: var(--spacing-large) 0 var(--spacing-small);
 }
 
 .buttonsWrapper {
@@ -43,30 +44,30 @@
   border-top: 1px solid var(--grey-light);
   margin: var(--spacing-medium) 0 0;
   padding: var(--spacing-small) 0;
-  text-transform: capitalize;
 
   &__text {
     color: var(--grey-light);
     font-size: var(--font-size-medium);
     text-align: center;
+    text-transform: capitalize;
   }
 }
 
 .item {
   background-color: var(--grey-light);
-  padding: var(--spacing-medium) var(--spacing-small) var(--spacing-medium) var(--spacing-medium);
+  padding: var(--spacing-small) var(--spacing-small) var(--spacing-small) var(--spacing-medium);
   margin: var(--spacing-small) 0;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  text-transform: capitalize;
   opacity: 1;
   border-radius: 8px;
 
   &__text {
     font-size: var(--font-size-small);
+    text-transform: capitalize;
   }
 }
 
